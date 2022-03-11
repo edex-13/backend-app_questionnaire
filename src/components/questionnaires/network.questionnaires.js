@@ -4,66 +4,9 @@ const router = expres.Router()
 
 const validatorHandler = require('../../middlewares/validator.handle.js')
 const response = require('../../middlewares/respone.handle.js')
-const { createQuestionnaires, reciveAnswer, isUuid } = require('./schema.questionnaires.js')
+const { validateCreateQuestionnaires, SendAnswer, isUuid } = require('./schema.questionnaires.js')
 
-router.get('/',
-  async (req, res, next) => {
-    try {
-      res.locals.status = 200
-      res.locals.message = 'get all questionnaires'
-      next()
-    } catch (err) {
-      next(err)
-    }
-  }
-  ,
-  response
-)
-
-router.post('/reply',
-  validatorHandler(reciveAnswer, 'body'),
-  async (req, res, next) => {
-    try {
-      res.locals.status = 200
-      res.locals.message = req.body
-      next()
-    } catch (err) {
-      next(err)
-    }
-  }
-  ,
-  response
-)
-router.get('/reply/:id',
-  async (req, res, next) => {
-    try {
-      res.locals.status = 200
-      res.locals.message = req.params
-      next()
-    } catch (err) {
-      next(err)
-    }
-  },
-  response
-)
-
-router.get('/:id',
-  validatorHandler(isUuid, 'params'),
-  async (req, res, next) => {
-    try {
-      res.locals.status = 200
-      res.locals.message = req.params
-      next()
-    } catch (err) {
-      next(err)
-    }
-  }
-  ,
-  response
-)
-
-router.post('/',
-  validatorHandler(createQuestionnaires, 'body'),
+const createQuestionnaires =
   async (req, res, next) => {
     try {
       res.locals.status = 201
@@ -73,12 +16,19 @@ router.post('/',
       next(err)
     }
   }
-  ,
-  response
-)
 
-router.delete('/:id',
-  validatorHandler(isUuid, 'params'),
+const getAllQuestionnaires =
+  async (req, res, next) => {
+    try {
+      res.locals.status = 200
+      res.locals.message = 'get all questionnaires'
+      next()
+    } catch (err) {
+      next(err)
+    }
+  }
+
+const getAQuestionnaires =
   async (req, res, next) => {
     try {
       res.locals.status = 200
@@ -88,6 +38,72 @@ router.delete('/:id',
       next(err)
     }
   }
+
+const deleteAQuestionnaires =
+  async (req, res, next) => {
+    try {
+      res.locals.status = 200
+      res.locals.message = req.params
+      next()
+    } catch (err) {
+      next(err)
+    }
+  }
+
+const SendAnswerQuestionnaires =
+  async (req, res, next) => {
+    try {
+      res.locals.status = 200
+      res.locals.message = req.body
+      next()
+    } catch (err) {
+      next(err)
+    }
+  }
+
+const getQuestionnairesDetail = async (req, res, next) => {
+  try {
+    res.locals.status = 200
+    res.locals.message = req.params
+    next()
+  } catch (err) {
+    next(err)
+  }
+}
+
+router.post('/reply',
+  validatorHandler(SendAnswer, 'body'),
+  SendAnswerQuestionnaires,
+  response
+)
+router.get('/reply/:id',
+  getQuestionnairesDetail
+  ,
+  response
+)
+router.get('/',
+  getAllQuestionnaires
+  ,
+  response
+)
+
+router.get('/:id',
+  validatorHandler(isUuid, 'params'),
+  getAQuestionnaires
+  ,
+  response
+)
+
+router.post('/',
+  validatorHandler(validateCreateQuestionnaires, 'body'),
+  createQuestionnaires
+  ,
+  response
+)
+
+router.delete('/:id',
+  validatorHandler(isUuid, 'params'),
+  deleteAQuestionnaires
   ,
   response
 )
