@@ -4,10 +4,10 @@ const ID = Joi.string().uuid()
 
 const validateCreateQuestionnaires = Joi.object().keys({
   name: Joi.string().required(),
-  time: Joi.number().required().min(1),
-  type: Joi.string().required().valid('a', 'b'),
   questions: Joi.array().items(Joi.object().keys({
     question: Joi.string().required(),
+    time: Joi.number().required().min(1),
+    type: Joi.string().required().valid('a', 'b'),
     answers: Joi.array().items(Joi.object().keys({
       response: Joi.string().required(),
       isCorrect: Joi.boolean().required()

@@ -6,7 +6,7 @@ const validatorHandler = require('../../middlewares/validator.handle.js')
 const response = require('../../middlewares/respone.handle.js')
 const { validateCreateQuestionnaires, SendAnswer, isUuid } = require('./schema.questionnaires.js')
 
-const createQuestionnaires =
+const networkCreateQuestionnaires =
   async (req, res, next) => {
     try {
       res.locals.status = 201
@@ -17,7 +17,7 @@ const createQuestionnaires =
     }
   }
 
-const getAllQuestionnaires =
+const networkGetAllQuestionnaires =
   async (req, res, next) => {
     try {
       res.locals.status = 200
@@ -28,7 +28,7 @@ const getAllQuestionnaires =
     }
   }
 
-const getAQuestionnaires =
+const networkGetAQuestionnaires =
   async (req, res, next) => {
     try {
       res.locals.status = 200
@@ -39,7 +39,7 @@ const getAQuestionnaires =
     }
   }
 
-const deleteAQuestionnaires =
+const networkDeleteAQuestionnaires =
   async (req, res, next) => {
     try {
       res.locals.status = 200
@@ -50,7 +50,7 @@ const deleteAQuestionnaires =
     }
   }
 
-const SendAnswerQuestionnaires =
+const networkSendAnswerQuestionnaires =
   async (req, res, next) => {
     try {
       res.locals.status = 200
@@ -61,7 +61,7 @@ const SendAnswerQuestionnaires =
     }
   }
 
-const getQuestionnairesDetail = async (req, res, next) => {
+const networkGetQuestionnairesDetail = async (req, res, next) => {
   try {
     res.locals.status = 200
     res.locals.message = req.params
@@ -73,37 +73,37 @@ const getQuestionnairesDetail = async (req, res, next) => {
 
 router.post('/reply',
   validatorHandler(SendAnswer, 'body'),
-  SendAnswerQuestionnaires,
+  networkSendAnswerQuestionnaires,
   response
 )
 router.get('/reply/:id',
-  getQuestionnairesDetail
+  networkGetQuestionnairesDetail
   ,
   response
 )
 router.get('/',
-  getAllQuestionnaires
+  networkGetAllQuestionnaires
   ,
   response
 )
 
 router.get('/:id',
   validatorHandler(isUuid, 'params'),
-  getAQuestionnaires
+  networkGetAQuestionnaires
   ,
   response
 )
 
 router.post('/',
   validatorHandler(validateCreateQuestionnaires, 'body'),
-  createQuestionnaires
+  networkCreateQuestionnaires
   ,
   response
 )
 
 router.delete('/:id',
   validatorHandler(isUuid, 'params'),
-  deleteAQuestionnaires
+  networkDeleteAQuestionnaires
   ,
   response
 )
