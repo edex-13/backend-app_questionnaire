@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "lint": "standard --fix"
+    "lint": "standard --fix",
+    "migrations:generate": "sequelize-cli migration:generate --name",
+    "migrations:run": "sequelize-cli db:migrate"
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,7 @@
   "license": "MIT",
   "devDependencies": {
     "nodemon": "^2.0.15",
+    "sequelize-cli": "^6.4.1",
     "standard": "^16.0.4"
   },
   "dependencies": {
