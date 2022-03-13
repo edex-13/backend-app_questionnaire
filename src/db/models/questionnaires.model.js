@@ -16,10 +16,6 @@ const questionnairesSchema = {
     type: DataTypes.STRING,
     allowNull: false
   },
-  time: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: Sequelize.NOW,

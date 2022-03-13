@@ -31,7 +31,7 @@ const basicQuestionsSchema = {
     allowNull: false
   },
 
-  questionTime: {
+  time: {
     type: DataTypes.INTEGER,
     allowNull: false,
     min: 0
