@@ -46,10 +46,12 @@ const basicAnswerSchema = {
 class BasicAnswer extends Model {
   static associate (models) {
     this.belongsTo(models.Questionnaires, {
-      as: 'questionnaire'
+      as: 'questionnaire',
+      foreignKey: 'idQuestionnaire'
     })
     this.belongsTo(models.BasicQuestions, {
-      as: 'basicQuestion'
+      as: 'basicQuestion',
+      foreignKey: 'idBasicQuestion'
     })
   }
 
@@ -57,7 +59,7 @@ class BasicAnswer extends Model {
     return {
       sequelize,
       tableName: TABLE_BASIC_ANSWER,
-      modelName: 'BasicAnswer',
+      modelName: 'BasicAnswers',
       timestamps: false
     }
   }

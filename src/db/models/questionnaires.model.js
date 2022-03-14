@@ -14,7 +14,8 @@ const questionnairesSchema = {
   },
   code: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   createdAt: {
     type: DataTypes.DATE,
@@ -39,7 +40,7 @@ class Questionnaires extends Model {
     return {
       sequelize,
       tableName: TABLE_QUESTIONNAIRES,
-      modelName: 'User',
+      modelName: 'Questionnaires',
       timestamps: false
     }
   }

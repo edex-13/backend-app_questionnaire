@@ -9,7 +9,7 @@ const setupModels = (sequelize) => {
 
   Questionnaires.associate(sequelize.models)
   BasicQuestions.associate(sequelize.models)
-  BasicAnswer.associated(sequelize.models)
+  BasicAnswer.associate(sequelize.models)
 }
 
 module.exports = setupModels

@@ -6,11 +6,14 @@ const validatorHandler = require('../../middlewares/validator.handle.js')
 const response = require('../../middlewares/respone.handle.js')
 const { validateCreateQuestionnaires, SendAnswer, isUuid } = require('./schema.questionnaires.js')
 
+const { createdQuestionnaires } = require('./controller.questionnaires.js')
+
 const networkCreateQuestionnaires =
   async (req, res, next) => {
     try {
+      const response = await createdQuestionnaires(req.body)
       res.locals.status = 201
-      res.locals.message = req.body
+      res.locals.message = response
       next()
     } catch (err) {
       next(err)
