@@ -1,8 +1,8 @@
 const { Model, DataTypes, Sequelize } = require('sequelize')
 
-const TABLE_QUESTIONNAIRES = 'questionnaires'
+const TABLE_USERS = 'users'
 
-const questionnairesSchema = {
+const usersSchema = {
   id: {
     type: DataTypes.UUID,
     defaultValue: Sequelize.UUIDV4,
@@ -12,20 +12,13 @@ const questionnairesSchema = {
     type: DataTypes.STRING,
     allowNull: false
   },
-  user: {
-    type: DataTypes.UUID,
-    allowNull: false,
-    references: {
-      model: 'users',
-      key: 'id'
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE'
-  },
-  code: {
+  email: {
     type: DataTypes.STRING,
-    allowNull: false,
-    unique: true
+    allowNull: false
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
   },
   createdAt: {
     type: DataTypes.DATE,
@@ -34,30 +27,26 @@ const questionnairesSchema = {
   }
 }
 
-class Questionnaires extends Model {
+class Users extends Model {
   static associate (models) {
     this.hasMany(models.BasicQuestions, {
       as: 'basicQuestions',
-      foreignKey: 'idQuestionnaire'
+      foreignKey: 'idUser'
     })
     this.hasMany(models.BasicAnswers, {
       as: 'basicAnswers',
-      foreignKey: 'idQuestionnaire'
-    })
-    this.belongsTo(models.users, {
-      as: 'users',
-      foreignKey: 'user'
+      foreignKey: 'idUser'
     })
   }
 
   static config (sequelize) {
     return {
       sequelize,
-      tableName: TABLE_QUESTIONNAIRES,
-      modelName: 'Questionnaires',
+      tableName: TABLE_USERS,
+      modelName: 'users',
       timestamps: false
     }
   }
 }
 
-module.exports = { TABLE_QUESTIONNAIRES, questionnairesSchema, Questionnaires }
+module.exports = { TABLE_USERS, usersSchema, Users }
