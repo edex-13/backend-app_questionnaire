@@ -1,0 +1,43 @@
+{
+  "name": "backend-app_questionnaire",
+  "version": "1.0.0",
+  "description": "app_questionnaire es una aplicación desarrollada para el área de recursos humanos en LA ESCUELA TECNOLÓGICA INSTITUTO TÉCNICO CENTRAL además de esto será presentado en infomatrix 2022.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "lint": "standard --fix",
+    "migrations:generate": "sequelize-cli migration:generate --name",
+    "migrations:run": "sequelize-cli db:migrate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com-felipe:edex-13/backend-app_questionnaire.git"
+  },
+  "keywords": [
+    "node",
+    "api"
+  ],
+  "eslintConfig": {
+    "extends": "./node_modules/standard/eslintrc.json"
+  },
+  "author": "Ederson Felipe Lopez Bolivar <ederson12f@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "sequelize-cli": "^6.4.1",
+    "standard": "^16.0.4"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "passport": "^0.5.2",
+    "passport-jwt": "^4.0.0",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.17.0"
+  }
+}
