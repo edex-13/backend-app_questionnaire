@@ -6,12 +6,13 @@ const generateCode = () => {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-const createdQuestionnaires = async (data) => {
+const createdQuestionnaires = async (idUser, data) => {
   const code = generateCode()
   const { name } = data
   const newQuestionnaires = {
     name,
-    code
+    code,
+    user: idUser
   }
   const questionnaires = await models.Questionnaires.create(newQuestionnaires)
   const { id: idquestionnaires } = questionnaires
@@ -45,6 +46,35 @@ const createdQuestionnaires = async (data) => {
   return questionnaires
 }
 
+const getAllQuestionnaires = async (id) => {
+  const questionnaires = await models.Questionnaires.findAll({
+    where: {
+      user: id
+    }
+  }
+  )
+  return questionnaires
+}
+const getQuestionnaire = async (id) => {
+  const questionnaires = await models.Questionnaires.findOne({
+    where: {
+      id
+    }
+  })
+  return questionnaires
+}
+const deleteQuestionnaire = async (id) => {
+  const questionnaires = await models.Questionnaires.destroy({
+    where: {
+      id
+    }
+  })
+  return questionnaires
+}
+
 module.exports = {
-  createdQuestionnaires
+  createdQuestionnaires,
+  getAllQuestionnaires,
+  getQuestionnaire,
+  deleteQuestionnaire
 }

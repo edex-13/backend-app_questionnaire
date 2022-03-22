@@ -7,12 +7,12 @@ const validatorHandler = require('../../middlewares/validator.handle.js')
 const response = require('../../middlewares/respone.handle.js')
 const { validateCreateQuestionnaires, SendAnswer, isUuid } = require('./schema.questionnaires.js')
 
-const { createdQuestionnaires } = require('./controller.questionnaires.js')
+const { createdQuestionnaires, getAllQuestionnaires, getQuestionnaire, deleteQuestionnaire } = require('./controller.questionnaires.js')
 
 const networkCreateQuestionnaires =
   async (req, res, next) => {
     try {
-      const response = await createdQuestionnaires(req.body)
+      const response = await createdQuestionnaires(req.user.id, req.body)
       res.locals.status = 201
       res.locals.message = response
       next()
@@ -24,8 +24,9 @@ const networkCreateQuestionnaires =
 const networkGetAllQuestionnaires =
   async (req, res, next) => {
     try {
+      const response = await getAllQuestionnaires(req.user.id)
       res.locals.status = 200
-      res.locals.message = 'get all questionnaires'
+      res.locals.message = response
       next()
     } catch (err) {
       next(err)
@@ -35,8 +36,9 @@ const networkGetAllQuestionnaires =
 const networkGetAQuestionnaires =
   async (req, res, next) => {
     try {
+      const response = await getQuestionnaire(req.params.id)
       res.locals.status = 200
-      res.locals.message = req.user
+      res.locals.message = response
       next()
     } catch (err) {
       next(err)
@@ -46,8 +48,9 @@ const networkGetAQuestionnaires =
 const networkDeleteAQuestionnaires =
   async (req, res, next) => {
     try {
+      const response = await deleteQuestionnaire(req.params.id)
       res.locals.status = 200
-      res.locals.message = req.params
+      res.locals.message = response
       next()
     } catch (err) {
       next(err)
@@ -86,6 +89,7 @@ router.get('/reply/:id',
   response
 )
 router.get('/',
+  passport.authenticate('jwt', { session: false }),
   networkGetAllQuestionnaires
   ,
   response
@@ -100,6 +104,7 @@ router.get('/:id',
 )
 
 router.post('/',
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(validateCreateQuestionnaires, 'body'),
   networkCreateQuestionnaires
   ,
@@ -107,6 +112,7 @@ router.post('/',
 )
 
 router.delete('/:id',
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(isUuid, 'params'),
   networkDeleteAQuestionnaires
   ,
