@@ -12,6 +12,16 @@ const questionnairesSchema = {
     type: DataTypes.STRING,
     allowNull: false
   },
+  user: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'users',
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
+  },
   code: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -33,6 +43,10 @@ class Questionnaires extends Model {
     this.hasMany(models.BasicAnswers, {
       as: 'basicAnswers',
       foreignKey: 'idQuestionnaire'
+    })
+    this.belongsTo(models.users, {
+      as: 'users',
+      foreignKey: 'user'
     })
   }
 

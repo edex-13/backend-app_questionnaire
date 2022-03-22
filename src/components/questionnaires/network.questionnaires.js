@@ -1,4 +1,5 @@
 const expres = require('express')
+const passport = require('passport')
 
 const router = expres.Router()
 
@@ -35,7 +36,7 @@ const networkGetAQuestionnaires =
   async (req, res, next) => {
     try {
       res.locals.status = 200
-      res.locals.message = req.params
+      res.locals.message = req.user
       next()
     } catch (err) {
       next(err)
@@ -91,6 +92,7 @@ router.get('/',
 )
 
 router.get('/:id',
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(isUuid, 'params'),
   networkGetAQuestionnaires
   ,
