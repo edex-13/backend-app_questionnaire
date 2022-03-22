@@ -3,6 +3,11 @@ const routerApi = require('./routes')
 const logError = require('./middlewares/errors/log.error')
 const userError = require('./middlewares/errors/user.error')
 
+const dotenv = require('dotenv')
+dotenv.config()
+
+require('./utils/auth')
+
 const app = express()
 
 const PORT = process.env.PORT || 3000

@@ -49,7 +49,8 @@ class BasicQuestions extends Model {
       foreignKey: 'idBasicQuestion'
     })
     this.belongsTo(models.Questionnaires, {
-      as: 'questionnaire'
+      as: 'questionnaires',
+      foreignKey: 'idQuestionnaire'
     })
   }
 

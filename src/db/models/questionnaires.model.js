@@ -12,9 +12,20 @@ const questionnairesSchema = {
     type: DataTypes.STRING,
     allowNull: false
   },
+  user: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'users',
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
+  },
   code: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   createdAt: {
     type: DataTypes.DATE,
@@ -33,13 +44,17 @@ class Questionnaires extends Model {
       as: 'basicAnswers',
       foreignKey: 'idQuestionnaire'
     })
+    this.belongsTo(models.users, {
+      as: 'users',
+      foreignKey: 'user'
+    })
   }
 
   static config (sequelize) {
     return {
       sequelize,
       tableName: TABLE_QUESTIONNAIRES,
-      modelName: 'User',
+      modelName: 'Questionnaires',
       timestamps: false
     }
   }

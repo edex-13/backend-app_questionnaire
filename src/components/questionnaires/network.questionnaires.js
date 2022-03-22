@@ -1,4 +1,5 @@
 const expres = require('express')
+const passport = require('passport')
 
 const router = expres.Router()
 
@@ -6,11 +7,14 @@ const validatorHandler = require('../../middlewares/validator.handle.js')
 const response = require('../../middlewares/respone.handle.js')
 const { validateCreateQuestionnaires, SendAnswer, isUuid } = require('./schema.questionnaires.js')
 
+const { createdQuestionnaires } = require('./controller.questionnaires.js')
+
 const networkCreateQuestionnaires =
   async (req, res, next) => {
     try {
+      const response = await createdQuestionnaires(req.body)
       res.locals.status = 201
-      res.locals.message = req.body
+      res.locals.message = response
       next()
     } catch (err) {
       next(err)
@@ -32,7 +36,7 @@ const networkGetAQuestionnaires =
   async (req, res, next) => {
     try {
       res.locals.status = 200
-      res.locals.message = req.params
+      res.locals.message = req.user
       next()
     } catch (err) {
       next(err)
@@ -88,6 +92,7 @@ router.get('/',
 )
 
 router.get('/:id',
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(isUuid, 'params'),
   networkGetAQuestionnaires
   ,
