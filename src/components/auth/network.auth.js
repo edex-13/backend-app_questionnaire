@@ -7,10 +7,12 @@ const response = require('../../middlewares/respone.handle.js')
 
 const { validateLogin, validateRegister } = require('./schema.auth.js')
 
+const { createAUsers, login } = require('./controller.auth.js')
+
 const networkLogin = async (req, res, next) => {
   try {
-    const response = req.body
-    res.locals.status = 200
+    const response = await login(req.body)
+    res.locals.status = 201
     res.locals.message = response
     next()
   } catch (err) {
@@ -19,8 +21,8 @@ const networkLogin = async (req, res, next) => {
 }
 const networkRegister = async (req, res, next) => {
   try {
-    const response = req.body
-    res.locals.status = 200
+    const response = await createAUsers(req.body)
+    res.locals.status = 201
     res.locals.message = response
     next()
   } catch (err) {

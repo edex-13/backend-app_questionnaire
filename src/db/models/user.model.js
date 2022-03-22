@@ -6,7 +6,8 @@ const usersSchema = {
   id: {
     type: DataTypes.UUID,
     defaultValue: Sequelize.UUIDV4,
-    primaryKey: true
+    primaryKey: true,
+    allowNull: false
   },
   name: {
     type: DataTypes.STRING,
@@ -30,14 +31,7 @@ const usersSchema = {
 
 class Users extends Model {
   static associate (models) {
-    this.hasMany(models.BasicQuestions, {
-      as: 'basicQuestions',
-      foreignKey: 'idUser'
-    })
-    this.hasMany(models.BasicAnswers, {
-      as: 'basicAnswers',
-      foreignKey: 'idUser'
-    })
+
   }
 
   static config (sequelize) {
