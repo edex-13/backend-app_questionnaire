@@ -1,9 +1,20 @@
 const { Sequelize } = require('sequelize')
 const setupModels = require('./models')
 
-const sequelize = new Sequelize('postgres://username:password@127.0.0.1:5432/myapp', {
-  dialect: 'postgres'
-})
+const isProd = process.env.NODE_ENV === 'production'
+const options = {
+  dialect: 'postgres',
+  logging: !isProd
+}
+
+if (isProd) {
+  options.dialectOptions = {
+    ssl: {
+      rejectUnauthorized: false
+    }
+  }
+}
+const sequelize = new Sequelize(process.env.DATABASE_URL, options)
 
 setupModels(sequelize)
 

@@ -7,6 +7,11 @@ module.exports = {
   },
   production: {
     url,
-    dialect: 'postgres'
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: {
+        rejectUnauthorized: false
+      }
+    }
   }
 }
