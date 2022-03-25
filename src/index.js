@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const routerApi = require('./routes')
 const logError = require('./middlewares/errors/log.error')
 const userError = require('./middlewares/errors/user.error')
@@ -13,6 +14,8 @@ const app = express()
 const PORT = process.env.PORT || 3000
 
 app.use(express.json())
+
+app.use(cors())
 routerApi(app)
 app.use((req, res, next) => {
   next({
