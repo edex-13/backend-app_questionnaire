@@ -72,9 +72,60 @@ const deleteQuestionnaire = async (id) => {
   return questionnaires
 }
 
+const getAllQuestionnairesByCode = async (code) => {
+  const questionnaires = await models.Questionnaires.findOne({
+    where: {
+      code
+    }
+  })
+  const { id } = questionnaires
+  const basicQuestions = await models.BasicQuestions.findAll({
+    where: {
+      idQuestionnaire: id
+    }
+  })
+  const basicAnswers = await models.BasicAnswers.findAll({
+    where: {
+      idQuestionnaire: id
+    }
+  })
+  const response = basicQuestions.map((basicQuestion) => {
+    const { id: idBasicQuestion, question, time, type } = basicQuestion
+
+    const answersdb = basicAnswers.filter((basicAnswer) => {
+      return basicAnswer.idBasicQuestion === idBasicQuestion
+    })
+    const answers = answersdb.map((answer) => {
+      delete answer.dataValues.isCorrect
+      delete answer.dataValues.createdAt
+      delete answer.dataValues.idBasicQuestion
+      delete answer.dataValues.idQuestionnaire
+      return answer
+    })
+    return {
+
+      idBasicQuestion,
+      question,
+      time,
+      type,
+      answers
+
+    }
+  })
+
+  return {
+    id,
+    code,
+    name: questionnaires.name,
+    questions: response
+
+  }
+}
+
 module.exports = {
   createdQuestionnaires,
   getAllQuestionnaires,
   getQuestionnaire,
-  deleteQuestionnaire
+  deleteQuestionnaire,
+  getAllQuestionnairesByCode
 }
