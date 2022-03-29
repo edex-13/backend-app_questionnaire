@@ -7,7 +7,7 @@ const validatorHandler = require('../../middlewares/validator.handle.js')
 const response = require('../../middlewares/respone.handle.js')
 const { validateCreateQuestionnaires, SendAnswer, isUuid } = require('./schema.questionnaires.js')
 
-const { createdQuestionnaires, getAllQuestionnaires, getQuestionnaire, deleteQuestionnaire } = require('./controller.questionnaires.js')
+const { createdQuestionnaires, getAllQuestionnaires, getQuestionnaire, deleteQuestionnaire, getAllQuestionnairesByCode } = require('./controller.questionnaires.js')
 
 const networkCreateQuestionnaires =
   async (req, res, next) => {
@@ -70,8 +70,9 @@ const networkSendAnswerQuestionnaires =
 
 const networkGetQuestionnairesDetail = async (req, res, next) => {
   try {
+    const response = await getAllQuestionnairesByCode(req.params.code)
     res.locals.status = 200
-    res.locals.message = req.params
+    res.locals.message = response
     next()
   } catch (err) {
     next(err)
@@ -83,7 +84,7 @@ router.post('/reply',
   networkSendAnswerQuestionnaires,
   response
 )
-router.get('/reply/:id',
+router.get('/reply/:code',
   networkGetQuestionnairesDetail
   ,
   response
