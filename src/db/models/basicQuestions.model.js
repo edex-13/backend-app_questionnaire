@@ -18,8 +18,8 @@ const basicQuestionsSchema = {
       model: TABLE_QUESTIONNAIRES,
       key: 'id'
     },
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE'
+    onUpdate: 'SET NULL',
+    onDelete: 'SET NULL'
   },
   question: {
     type: DataTypes.STRING,
@@ -44,14 +44,7 @@ const basicQuestionsSchema = {
 }
 class BasicQuestions extends Model {
   static associate (models) {
-    this.hasMany(models.BasicAnswers, {
-      as: 'basicAnswers',
-      foreignKey: 'idBasicQuestion'
-    })
-    this.belongsTo(models.Questionnaires, {
-      as: 'questionnaires',
-      foreignKey: 'idQuestionnaire'
-    })
+
   }
 
   static config (sequelize) {

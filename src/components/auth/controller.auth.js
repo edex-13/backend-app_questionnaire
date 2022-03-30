@@ -32,7 +32,7 @@ const login = async (data) => {
   if (!user) {
     throw new Error('Email not found')
   }
-  if (!verifyPassword(password, user.password)) {
+  if (!await verifyPassword(password, user.password)) {
     throw new Error('Password is incorrect')
   }
 

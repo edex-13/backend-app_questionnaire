@@ -19,8 +19,8 @@ const questionnairesSchema = {
       model: 'users',
       key: 'id'
     },
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE'
+    onUpdate: 'SET NULL',
+    onDelete: 'SET NULL'
   },
   code: {
     type: DataTypes.STRING,

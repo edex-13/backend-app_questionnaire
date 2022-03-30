@@ -45,14 +45,14 @@ const basicAnswerSchema = {
 
 class BasicAnswer extends Model {
   static associate (models) {
-    this.belongsTo(models.Questionnaires, {
-      as: 'questionnaire',
-      foreignKey: 'idQuestionnaire'
-    })
-    this.belongsTo(models.BasicQuestions, {
-      as: 'basicQuestion',
-      foreignKey: 'idBasicQuestion'
-    })
+    // this.belongsTo(models.Questionnaires, {
+    //   as: 'questionnaire',
+    //   foreignKey: 'idQuestionnaire'
+    // })
+    // this.belongsTo(models.BasicQuestions, {
+    //   as: 'basicQuestion',
+    //   foreignKey: 'idBasicQuestion'
+    // })
   }
 
   static config (sequelize) {

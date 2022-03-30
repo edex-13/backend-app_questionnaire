@@ -1,6 +1,10 @@
 const userError = (err, req, res, next) => {
   let status = err.status || 500
-  const message = err.errors[0].message || err.message || 'Bad request'
+  let message = err.message || 'Bad request'
+  if (Array.isArray(err.errors)) {
+    message = err.errors.map(error => error.message)
+  }
+
   if (!err.isUserError) status = 400
 
   res.status(status).json({
