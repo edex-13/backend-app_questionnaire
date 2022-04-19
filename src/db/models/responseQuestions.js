@@ -40,7 +40,6 @@ const responseQuestionsSchema = {
     defaultValue: Sequelize.NOW,
     field: 'created_at'
   }
-
 }
 
 class ResponseQuestions extends Model {
