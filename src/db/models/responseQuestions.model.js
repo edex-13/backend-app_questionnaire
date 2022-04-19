@@ -2,7 +2,7 @@ const { Model, DataTypes, Sequelize } = require('sequelize')
 
 const { TABLE_QUESTIONNAIRES } = require('./questionnaires.model')
 
-const TABLE_BASIC_QUESTIONS = 'response_questionaires'
+const TABLE_RESPONSE_QUESTIONS = 'response_questionaires'
 
 const responseQuestionsSchema = {
   id: {
@@ -53,14 +53,14 @@ class ResponseQuestions extends Model {
   static config (sequelize) {
     return {
       sequelize,
-      tableName: TABLE_BASIC_QUESTIONS,
+      tableName: TABLE_RESPONSE_QUESTIONS,
       modelName: 'ResponseQuestions',
       timestamps: false
     }
   }
 }
 module.exports = {
-  TABLE_BASIC_QUESTIONS,
+  TABLE_RESPONSE_QUESTIONS,
   responseQuestionsSchema,
   ResponseQuestions
 }
