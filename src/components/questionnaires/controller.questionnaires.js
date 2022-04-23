@@ -121,11 +121,76 @@ const getAllQuestionnairesByCode = async (code) => {
 
   }
 }
+const responseQuestionnaire = async ({ nameUser, idQuestionnaire, answers: answersUser }) => {
+  let countCorrect = 0
+  let numberOfQuestions = 0
+  let wrongAnswers = 0
+
+  const questions = await models.BasicQuestions.findAll({
+    where: {
+      idQuestionnaire
+    }
+  })
+  numberOfQuestions = questions.length
+  await Promise.all(questions.map(async (question) => {
+    const { id } = question
+    const { dataValues: responseCorrectDB } = await models.BasicAnswers.findOne({
+      where: {
+        idBasicQuestion: id,
+        isCorrect: true
+      }
+    })
+
+    for (let i = 0; i < answersUser.length; i++) {
+      const { BasicQuestionId: idBasicQuestionUser, answer: answerUser } = answersUser[i]
+      if (idBasicQuestionUser !== responseCorrectDB.idBasicQuestion) {
+        break
+      }
+      if (question.type === 'text') {
+        if (answerUser === responseCorrectDB.answer) {
+          countCorrect++
+          break
+        }
+      } else {
+        if (answerUser === responseCorrectDB.id) {
+          countCorrect++
+          break
+        }
+      }
+    }
+  }))
+  wrongAnswers = numberOfQuestions - countCorrect
+
+  await models.ResponseQuestions.create({
+    idQuestionnaire,
+    name_user: nameUser,
+    correct_answers: countCorrect,
+    wrong_answers: wrongAnswers
+  })
+  const a = await models.ResponseQuestions.findAll()
+  return { numberOfQuestions, countCorrect, wrongAnswers, a }
+}
+const getResultsQuestionnaires = async (id) => {
+  const responseQuestions = await models.ResponseQuestions.findAll({
+    where: {
+      idQuestionnaire: id
+
+    },
+    order: [
+      ['correct_answers', 'DESC']
+    ],
+    attributes: ['correct_answers', 'wrong_answers', 'name_user']
+  })
+
+  return responseQuestions
+}
 
 module.exports = {
   createdQuestionnaires,
   getAllQuestionnaires,
   getQuestionnaire,
   deleteQuestionnaire,
-  getAllQuestionnairesByCode
+  getAllQuestionnairesByCode,
+  responseQuestionnaire,
+  getResultsQuestionnaires
 }

@@ -16,10 +16,11 @@ const validateCreateQuestionnaires = Joi.object().keys({
 })
 
 const SendAnswer = Joi.object().keys({
+  nameUser: Joi.string().required(),
   idQuestionnaire: ID.required(),
   answers: Joi.array().items(Joi.object().keys({
-    idQuestion: ID.required(),
-    idAnswer: ID.required()
+    BasicQuestionId: ID.required(),
+    answer: Joi.string().required()
   }))
 })
 
