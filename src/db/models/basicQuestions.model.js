@@ -9,7 +9,9 @@ const basicQuestionsSchema = {
     type: DataTypes.UUID,
     defaultValue: Sequelize.UUIDV4,
     primaryKey: true,
-    allowNull: false
+    allowNull: false,
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
   },
   idQuestionnaire: {
     type: DataTypes.UUID,

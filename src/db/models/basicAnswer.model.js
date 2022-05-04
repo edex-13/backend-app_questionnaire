@@ -10,7 +10,9 @@ const basicAnswerSchema = {
     type: DataTypes.UUID,
     defaultValue: Sequelize.UUIDV4,
     primaryKey: true,
-    allowNull: false
+    allowNull: false,
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
   },
   idQuestionnaire: {
     type: DataTypes.UUID,
@@ -18,7 +20,9 @@ const basicAnswerSchema = {
     references: {
       model: TABLE_QUESTIONNAIRES,
       key: 'id'
-    }
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
   },
   idBasicQuestion: {
     type: DataTypes.UUID,
@@ -26,7 +30,9 @@ const basicAnswerSchema = {
     references: {
       model: TABLE_BASIC_QUESTIONS,
       key: 'id'
-    }
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
   },
   answer: {
     type: DataTypes.STRING,

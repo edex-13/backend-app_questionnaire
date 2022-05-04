@@ -6,7 +6,9 @@ const questionnairesSchema = {
   id: {
     type: DataTypes.UUID,
     defaultValue: Sequelize.UUIDV4,
-    primaryKey: true
+    primaryKey: true,
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
   },
   name: {
     type: DataTypes.STRING,
