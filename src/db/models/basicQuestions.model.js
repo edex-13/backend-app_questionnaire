@@ -18,8 +18,8 @@ const basicQuestionsSchema = {
       model: TABLE_QUESTIONNAIRES,
       key: 'id'
     },
-    onUpdate: 'SET NULL',
-    onDelete: 'SET NULL'
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
   },
   question: {
     type: DataTypes.STRING,
