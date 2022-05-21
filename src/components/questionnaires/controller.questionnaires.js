@@ -1,4 +1,5 @@
 const { models } = require('../../db/connection')
+const sendMail = require('../../utils/email')
 
 const generateCode = () => {
   const min = 100000
@@ -168,7 +169,16 @@ const responseQuestionnaire = async ({ nameUser, idQuestionnaire, answers: answe
     wrong_answers: wrongAnswers
   })
   const a = await models.ResponseQuestions.findAll()
-  return { numberOfQuestions, countCorrect, wrongAnswers, a }
+  // html de correo
+  const html = `
+  <h1>Resultados de la encuesta</h1>
+  <p>Nombre: ${nameUser}</p>
+  <p>Total de preguntas: ${numberOfQuestions}</p>
+  <p>Respuestas correctas: ${countCorrect}</p>
+  <p>Respuestas incorrectas: ${wrongAnswers}</p>
+  `
+  await sendMail('rodol123x@gmailc.om', html, 'oli')
+  return { numberOfQuestions, countCorrect, wrongAnswers }
 }
 const getResultsQuestionnaires = async (id) => {
   const responseQuestions = await models.ResponseQuestions.findAll({
